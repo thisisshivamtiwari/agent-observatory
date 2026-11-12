@@ -1,0 +1,6 @@
+# Agent settings. The usd_per_mtok_* prices are an ASSUMED API-equivalent rate for a small hosted model, used only to
+# compare prompt versions by cost; the local model used in this repo costs nothing per call.
+max_steps: 8
+max_tokens: 160
+usd_per_mtok_in: 0.10
+usd_per_mtok_out: 0.40
