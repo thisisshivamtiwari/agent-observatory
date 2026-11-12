@@ -1,0 +1,32 @@
+# Lint, tests, and the eval gate. The gate replays recorded model responses (cassettes/), so it needs no GPU or
+# API key; it fails if the accepted prompt version no longer reproduces its committed result or is worse than it.
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - name: Install
+        run: uv sync --locked
+      - name: Lint
+        run: uv run ruff check . && uv run ruff format --check .
+      - name: Tests
+        run: uv run pytest -q
+      - name: Eval gate (replay)
+        run: uv run python -m agent_observatory ci
+      - name: Gate rejects the deliberately regressed prompt
+        run: |
+          if uv run python -m agent_observatory gate --candidate results/eval-v3-regressed.json; then
+            echo "expected the gate to fail v3-regressed"; exit 1
+          fi
