@@ -1,0 +1,7 @@
+# CI eval gate. A candidate result fails if it is worse than the accepted result by more than these limits.
+active_prompt: v2
+accepted: results/eval-v2.json
+max_pass_rate_drop: 0.05     # absolute, e.g. 0.70 -> 0.64 fails
+max_capture_drop: 0.02       # absolute, mean revenue capture vs the oracle
+max_latency_growth: 0.50     # relative, p95 latency per decision
+max_cost_growth: 0.50        # relative, estimated cost per decision
