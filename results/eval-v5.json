@@ -1,0 +1,1014 @@
+{
+ "prompt_version": "v5",
+ "model": "mlx-community/Qwen2.5-1.5B-Instruct-4bit",
+ "backend": "mlx",
+ "scenarios": 30,
+ "pass_rate": 0.1333,
+ "check_pass_rates": {
+  "final_action": 0.8667,
+  "within_limits": 0.8667,
+  "used_forecast": 0.8667,
+  "right_direction": 0.3667,
+  "revenue_capture": 0.1667
+ },
+ "revenue_capture_mean": 0.6975,
+ "revenue_capture_median": 0.7686,
+ "ops": {
+  "decisions": 30,
+  "latency_ms_p50": 2993.4,
+  "latency_ms_p95": 9389.8,
+  "tokens_per_decision": 1895.1,
+  "cost_usd_per_1k_decisions_est": 0.2219,
+  "tool_calls_per_decision": 3.87,
+  "error_spans": 36,
+  "spans": 262
+ },
+ "rows": [
+  {
+   "scenario": "S01-quiet",
+   "oracle_price": 110.0,
+   "agent_price": 130.0,
+   "capture": 0.9425,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": false,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S01-quiet",
+    "final_tool": "set_price",
+    "price": 130.0,
+    "reason": "Current demand forecasted to be 29.1, which is close to the current price ceiling of 286.",
+    "tool_calls": [
+     "get_hotel_state",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 3,
+    "tokens_in": 1260,
+    "tokens_out": 87,
+    "latency_ms": 3154.8,
+    "cost_usd": 0.0001608
+   }
+  },
+  {
+   "scenario": "S02-event",
+   "oracle_price": 227.0,
+   "agent_price": 288.0,
+   "capture": 0.6933,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": true,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S02-event",
+    "final_tool": "set_price",
+    "price": 288.0,
+    "reason": "Highest demand at this price point",
+    "tool_calls": [
+     "get_hotel_state",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 3,
+    "tokens_in": 1406,
+    "tokens_out": 80,
+    "latency_ms": 3003.6000000000004,
+    "cost_usd": 0.00017260000000000002
+   }
+  },
+  {
+   "scenario": "S03-nearly_full",
+   "oracle_price": 169.0,
+   "agent_price": 120.0,
+   "capture": 0.7383,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": true,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S03-nearly_full",
+    "final_tool": "set_price",
+    "price": 120.0,
+    "reason": "Forecasted demand is high, aiming to maximize revenue.",
+    "tool_calls": [
+     "get_hotel_state",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 3,
+    "tokens_in": 1261,
+    "tokens_out": 72,
+    "latency_ms": 2680.7999999999997,
+    "cost_usd": 0.0001549
+   }
+  },
+  {
+   "scenario": "S04-far_out",
+   "oracle_price": 88.0,
+   "agent_price": 120.0,
+   "capture": 0.6095,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": false,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S04-far_out",
+    "final_tool": "set_price",
+    "price": 120.0,
+    "reason": "Forecasted demand is high, aiming to maximize revenue.",
+    "tool_calls": [
+     "get_hotel_state",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 3,
+    "tokens_in": 1261,
+    "tokens_out": 72,
+    "latency_ms": 2674.0,
+    "cost_usd": 0.0001549
+   }
+  },
+  {
+   "scenario": "S05-undercut",
+   "oracle_price": 93.0,
+   "agent_price": 92.0,
+   "capture": 0.9973,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": true,
+    "revenue_capture": true
+   },
+   "passed": true,
+   "decision": {
+    "scenario_id": "S05-undercut",
+    "final_tool": "set_price",
+    "price": 92.0,
+    "reason": "Current demand forecasted to be 64.7 requests at this price.",
+    "tool_calls": [
+     "get_hotel_state",
+     "get_competitor_rates",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 4,
+    "tokens_in": 1810,
+    "tokens_out": 95,
+    "latency_ms": 3772.4,
+    "cost_usd": 0.00021899999999999998
+   }
+  },
+  {
+   "scenario": "S06-quiet",
+   "oracle_price": 103.0,
+   "agent_price": 130.0,
+   "capture": 0.8806,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": false,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S06-quiet",
+    "final_tool": "set_price",
+    "price": 130.0,
+    "reason": "Current demand forecasted to be 20.3, which is close to the current price ceiling of 286.",
+    "tool_calls": [
+     "get_hotel_state",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 3,
+    "tokens_in": 1258,
+    "tokens_out": 87,
+    "latency_ms": 2889.8,
+    "cost_usd": 0.0001606
+   }
+  },
+  {
+   "scenario": "S07-event",
+   "oracle_price": 277.0,
+   "agent_price": 130.0,
+   "capture": 0.4871,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": false,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S07-event",
+    "final_tool": "set_price",
+    "price": 130.0,
+    "reason": "Current demand and room availability.",
+    "tool_calls": [
+     "get_hotel_state",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 3,
+    "tokens_in": 1256,
+    "tokens_out": 67,
+    "latency_ms": 2623.6,
+    "cost_usd": 0.00015240000000000002
+   }
+  },
+  {
+   "scenario": "S08-nearly_full",
+   "oracle_price": 123.0,
+   "agent_price": 198.0,
+   "capture": 0.0187,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": true,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S08-nearly_full",
+    "final_tool": "set_price",
+    "price": 198.0,
+    "reason": "Highest demand forecasted at full price.",
+    "tool_calls": [
+     "get_hotel_state",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 3,
+    "tokens_in": 1255,
+    "tokens_out": 67,
+    "latency_ms": 2632.2,
+    "cost_usd": 0.00015230000000000002
+   }
+  },
+  {
+   "scenario": "S09-far_out",
+   "oracle_price": 180.0,
+   "agent_price": 130.0,
+   "capture": 0.7405,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": false,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S09-far_out",
+    "final_tool": "set_price",
+    "price": 130.0,
+    "reason": "Current demand forecasted to be 88.5% of capacity, with 34 rooms sold, resulting in expected revenue of $4420",
+    "tool_calls": [
+     "get_hotel_state",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 3,
+    "tokens_in": 1265,
+    "tokens_out": 93,
+    "latency_ms": 2986.2,
+    "cost_usd": 0.00016369999999999997
+   }
+  },
+  {
+   "scenario": "S10-undercut",
+   "oracle_price": 107.0,
+   "agent_price": 104.0,
+   "capture": 0.989,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": true,
+    "revenue_capture": true
+   },
+   "passed": true,
+   "decision": {
+    "scenario_id": "S10-undercut",
+    "final_tool": "set_price",
+    "price": 104.0,
+    "reason": "Current demand forecasted to be highest at this price.",
+    "tool_calls": [
+     "get_hotel_state",
+     "get_competitor_rates",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 4,
+    "tokens_in": 1818,
+    "tokens_out": 92,
+    "latency_ms": 3778.8,
+    "cost_usd": 0.0002186
+   }
+  },
+  {
+   "scenario": "S11-quiet",
+   "oracle_price": 74.0,
+   "agent_price": 90.0,
+   "capture": 0.9074,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": false,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S11-quiet",
+    "final_tool": "set_price",
+    "price": 90.0,
+    "reason": "Current demand forecasted to be 37.4 rooms sold, which is close to the capacity of 180 rooms.",
+    "tool_calls": [
+     "get_hotel_state",
+     "get_competitor_rates",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 4,
+    "tokens_in": 1799,
+    "tokens_out": 100,
+    "latency_ms": 3810.6,
+    "cost_usd": 0.00021989999999999998
+   }
+  },
+  {
+   "scenario": "S12-event",
+   "oracle_price": 352.0,
+   "agent_price": 160.0,
+   "capture": 0.4546,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": false,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S12-event",
+    "final_tool": "set_price",
+    "price": 160.0,
+    "reason": "Current demand and room availability suggests this price is optimal.",
+    "tool_calls": [
+     "get_hotel_state",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 3,
+    "tokens_in": 1261,
+    "tokens_out": 72,
+    "latency_ms": 2713.5,
+    "cost_usd": 0.00015490000000000002
+   }
+  },
+  {
+   "scenario": "S13-nearly_full",
+   "oracle_price": 209.0,
+   "agent_price": 160.0,
+   "capture": 0.7873,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": false,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S13-nearly_full",
+    "final_tool": "set_price",
+    "price": 160.0,
+    "reason": "Current demand and room availability suggests this price is optimal.",
+    "tool_calls": [
+     "get_hotel_state",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 3,
+    "tokens_in": 1257,
+    "tokens_out": 72,
+    "latency_ms": 2699.8,
+    "cost_usd": 0.00015450000000000001
+   }
+  },
+  {
+   "scenario": "S14-far_out",
+   "oracle_price": 129.0,
+   "agent_price": 120.0,
+   "capture": 0.9655,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": true,
+    "revenue_capture": true
+   },
+   "passed": true,
+   "decision": {
+    "scenario_id": "S14-far_out",
+    "final_tool": "set_price",
+    "price": 120.0,
+    "reason": "Forecasted demand is high, aiming to maximize revenue.",
+    "tool_calls": [
+     "get_hotel_state",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 3,
+    "tokens_in": 1263,
+    "tokens_out": 72,
+    "latency_ms": 2761.7999999999997,
+    "cost_usd": 0.00015510000000000003
+   }
+  },
+  {
+   "scenario": "S15-undercut",
+   "oracle_price": 119.0,
+   "agent_price": null,
+   "capture": 0.19,
+   "checks": {
+    "final_action": false,
+    "within_limits": false,
+    "used_forecast": false,
+    "right_direction": false,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S15-undercut",
+    "final_tool": null,
+    "price": null,
+    "reason": "",
+    "tool_calls": [
+     "set_price",
+     "set_price",
+     "set_price",
+     "set_price",
+     "set_price",
+     "set_price",
+     "set_price",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 8,
+    "llm_calls": 8,
+    "tokens_in": 4256,
+    "tokens_out": 263,
+    "latency_ms": 9265.4,
+    "cost_usd": 0.0005308000000000001
+   }
+  },
+  {
+   "scenario": "S16-quiet",
+   "oracle_price": 105.0,
+   "agent_price": 134.0,
+   "capture": 0.8236,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": false,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S16-quiet",
+    "final_tool": "set_price",
+    "price": 134.0,
+    "reason": "Current demand forecasted to be 31.3 requests per day, which is the highest among the competitors.",
+    "tool_calls": [
+     "get_hotel_state",
+     "get_competitor_rates",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 4,
+    "tokens_in": 1823,
+    "tokens_out": 104,
+    "latency_ms": 3912.3,
+    "cost_usd": 0.00022390000000000002
+   }
+  },
+  {
+   "scenario": "S17-event",
+   "oracle_price": 198.0,
+   "agent_price": 113.5,
+   "capture": 0.5738,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": true,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S17-event",
+    "final_tool": "set_price",
+    "price": 113.5,
+    "reason": "Current demand and competitor pricing analysis",
+    "tool_calls": [
+     "get_hotel_state",
+     "get_competitor_rates",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 4,
+    "tokens_in": 1814,
+    "tokens_out": 86,
+    "latency_ms": 3662.0,
+    "cost_usd": 0.00021580000000000001
+   }
+  },
+  {
+   "scenario": "S18-nearly_full",
+   "oracle_price": 222.0,
+   "agent_price": 160.0,
+   "capture": 0.7533,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": false,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S18-nearly_full",
+    "final_tool": "set_price",
+    "price": 160.0,
+    "reason": "Current demand and room availability suggests this price is optimal.",
+    "tool_calls": [
+     "get_hotel_state",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 3,
+    "tokens_in": 1257,
+    "tokens_out": 72,
+    "latency_ms": 2693.7,
+    "cost_usd": 0.00015450000000000001
+   }
+  },
+  {
+   "scenario": "S19-far_out",
+   "oracle_price": 211.0,
+   "agent_price": 160.0,
+   "capture": 0.772,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": false,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S19-far_out",
+    "final_tool": "set_price",
+    "price": 160.0,
+    "reason": "Current demand forecasted to be 91.7% of capacity, with 31 rooms sold, resulting in expected revenue of $4960.",
+    "tool_calls": [
+     "get_hotel_state",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 3,
+    "tokens_in": 1261,
+    "tokens_out": 94,
+    "latency_ms": 3000.6000000000004,
+    "cost_usd": 0.00016370000000000002
+   }
+  },
+  {
+   "scenario": "S20-undercut",
+   "oracle_price": 102.0,
+   "agent_price": null,
+   "capture": 0.2494,
+   "checks": {
+    "final_action": false,
+    "within_limits": false,
+    "used_forecast": false,
+    "right_direction": false,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S20-undercut",
+    "final_tool": null,
+    "price": null,
+    "reason": "",
+    "tool_calls": [
+     "set_price",
+     "set_price",
+     "set_price",
+     "set_price",
+     "set_price",
+     "set_price",
+     "set_price",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 8,
+    "llm_calls": 8,
+    "tokens_in": 4314,
+    "tokens_out": 277,
+    "latency_ms": 9444.900000000001,
+    "cost_usd": 0.0005422000000000001
+   }
+  },
+  {
+   "scenario": "S21-quiet",
+   "oracle_price": 113.0,
+   "agent_price": 130.0,
+   "capture": 0.9659,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": false,
+    "revenue_capture": true
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S21-quiet",
+    "final_tool": "set_price",
+    "price": 130.0,
+    "reason": "Current demand forecasted to be 45.1 rooms sold at $130.00 per room.",
+    "tool_calls": [
+     "get_hotel_state",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 3,
+    "tokens_in": 1260,
+    "tokens_out": 85,
+    "latency_ms": 2835.5,
+    "cost_usd": 0.00016
+   }
+  },
+  {
+   "scenario": "S22-event",
+   "oracle_price": 150.0,
+   "agent_price": 162.0,
+   "capture": 0.9559,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": true,
+    "revenue_capture": true
+   },
+   "passed": true,
+   "decision": {
+    "scenario_id": "S22-event",
+    "final_tool": "set_price",
+    "price": 162.0,
+    "reason": "Forecasted demand is highest at this price.",
+    "tool_calls": [
+     "get_hotel_state",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 3,
+    "tokens_in": 1406,
+    "tokens_out": 90,
+    "latency_ms": 3119.8,
+    "cost_usd": 0.0001766
+   }
+  },
+  {
+   "scenario": "S23-nearly_full",
+   "oracle_price": 214.0,
+   "agent_price": 160.0,
+   "capture": 0.7652,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": false,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S23-nearly_full",
+    "final_tool": "set_price",
+    "price": 160.0,
+    "reason": "Current demand forecasted to be 55.4% of capacity, with 14 rooms sold, resulting in expected revenue of $2,240.",
+    "tool_calls": [
+     "get_hotel_state",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 3,
+    "tokens_in": 1263,
+    "tokens_out": 95,
+    "latency_ms": 3008.8,
+    "cost_usd": 0.0001643
+   }
+  },
+  {
+   "scenario": "S24-far_out",
+   "oracle_price": 185.0,
+   "agent_price": 160.0,
+   "capture": 0.8777,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": false,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S24-far_out",
+    "final_tool": "set_price",
+    "price": 160.0,
+    "reason": "Current demand and room availability suggests this price is optimal.",
+    "tool_calls": [
+     "get_hotel_state",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 3,
+    "tokens_in": 1264,
+    "tokens_out": 72,
+    "latency_ms": 2742.3,
+    "cost_usd": 0.0001552
+   }
+  },
+  {
+   "scenario": "S25-undercut",
+   "oracle_price": 106.0,
+   "agent_price": null,
+   "capture": 0.1734,
+   "checks": {
+    "final_action": false,
+    "within_limits": false,
+    "used_forecast": false,
+    "right_direction": false,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S25-undercut",
+    "final_tool": null,
+    "price": null,
+    "reason": "",
+    "tool_calls": [
+     "set_price",
+     "set_price",
+     "set_price",
+     "set_price",
+     "set_price",
+     "set_price",
+     "set_price",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 8,
+    "llm_calls": 8,
+    "tokens_in": 4296,
+    "tokens_out": 269,
+    "latency_ms": 9322.4,
+    "cost_usd": 0.0005372
+   }
+  },
+  {
+   "scenario": "S26-quiet",
+   "oracle_price": 102.0,
+   "agent_price": 126.5,
+   "capture": 0.9137,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": true,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S26-quiet",
+    "final_tool": "set_price",
+    "price": 126.5,
+    "reason": "Current demand forecasted to be at the optimal price point.",
+    "tool_calls": [
+     "get_hotel_state",
+     "get_competitor_rates",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 4,
+    "tokens_in": 1817,
+    "tokens_out": 93,
+    "latency_ms": 3764.8,
+    "cost_usd": 0.0002189
+   }
+  },
+  {
+   "scenario": "S27-event",
+   "oracle_price": 236.0,
+   "agent_price": 150.0,
+   "capture": 0.6542,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": true,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S27-event",
+    "final_tool": "set_price",
+    "price": 150.0,
+    "reason": "Expected demand is high, thus the price is set to maximize revenue.",
+    "tool_calls": [
+     "get_hotel_state",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 3,
+    "tokens_in": 1266,
+    "tokens_out": 75,
+    "latency_ms": 2762.1000000000004,
+    "cost_usd": 0.0001566
+   }
+  },
+  {
+   "scenario": "S28-nearly_full",
+   "oracle_price": 153.0,
+   "agent_price": 120.0,
+   "capture": 0.8073,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": true,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S28-nearly_full",
+    "final_tool": "set_price",
+    "price": 120.0,
+    "reason": "Forecasted demand is highest at this price.",
+    "tool_calls": [
+     "get_hotel_state",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 3,
+    "tokens_in": 1263,
+    "tokens_out": 70,
+    "latency_ms": 2710.0,
+    "cost_usd": 0.0001543
+   }
+  },
+  {
+   "scenario": "S29-far_out",
+   "oracle_price": 153.0,
+   "agent_price": 130.0,
+   "capture": 0.878,
+   "checks": {
+    "final_action": true,
+    "within_limits": true,
+    "used_forecast": true,
+    "right_direction": false,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S29-far_out",
+    "final_tool": "set_price",
+    "price": 130.0,
+    "reason": "Current demand and room availability suggests this price is optimal.",
+    "tool_calls": [
+     "get_hotel_state",
+     "forecast_demand",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 0,
+    "llm_calls": 3,
+    "tokens_in": 1266,
+    "tokens_out": 72,
+    "latency_ms": 2724.7,
+    "cost_usd": 0.00015539999999999998
+   }
+  },
+  {
+   "scenario": "S30-undercut",
+   "oracle_price": 90.0,
+   "agent_price": null,
+   "capture": 0.3606,
+   "checks": {
+    "final_action": false,
+    "within_limits": false,
+    "used_forecast": false,
+    "right_direction": false,
+    "revenue_capture": false
+   },
+   "passed": false,
+   "decision": {
+    "scenario_id": "S30-undercut",
+    "final_tool": null,
+    "price": null,
+    "reason": "",
+    "tool_calls": [
+     "set_price",
+     "set_price",
+     "set_price",
+     "set_price",
+     "set_price",
+     "set_price",
+     "set_price",
+     "set_price"
+    ],
+    "errors": [],
+    "guardrail_blocks": 8,
+    "llm_calls": 8,
+    "tokens_in": 4356,
+    "tokens_out": 296,
+    "latency_ms": 9838.6,
+    "cost_usd": 0.000554
+   }
+  }
+ ]
+}

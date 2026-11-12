@@ -1,0 +1,18 @@
+{
+ "keep current price": {
+  "revenue_capture_mean": 0.6698,
+  "share_at_95pct_capture": 0.0333
+ },
+ "match competitor median": {
+  "revenue_capture_mean": 0.8086,
+  "share_at_95pct_capture": 0.1
+ },
+ "5% under lowest competitor": {
+  "revenue_capture_mean": 0.8014,
+  "share_at_95pct_capture": 0.1667
+ },
+ "oracle (knows the demand curve)": {
+  "revenue_capture_mean": 1.0,
+  "share_at_95pct_capture": 1
+ }
+}

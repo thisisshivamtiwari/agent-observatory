@@ -1,0 +1,10 @@
+{
+ "model": "mlx-community/Qwen2.5-1.5B-Instruct-4bit",
+ "scenarios": 30,
+ "accepted": "v2",
+ "accepted_pass_rate": 0.2667,
+ "accepted_revenue_capture": 0.7211,
+ "versions_rejected_by_gate": 4,
+ "versions_compared": 4,
+ "best_heuristic_capture": 0.8086
+}
