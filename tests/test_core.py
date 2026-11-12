@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from agent_observatory.agent import Config, load_prompt, parse_action, run_decision
+from agent_observatory.agent import ROOT, Config, load_prompt, parse_action, run_decision
 from agent_observatory.evals import load_scenarios, ops_from_traces, score
 from agent_observatory.gate import check
 from agent_observatory.llm import CassetteMiss, Completion, RecordingClient, ReplayClient
@@ -120,3 +120,15 @@ def test_prompts_render():
     for v in ("v1", "v2", "v3-regressed"):
         p = load_prompt(v)
         assert "{tools}" not in p["system"].format(tools="T") and json.dumps(p)
+
+
+def test_committed_cassette_replays_and_a_prompt_edit_misses(tmp_path):
+    """What CI relies on: the accepted version replays from the committed cassette; an edited prompt does not."""
+    s = load_scenarios()[0]
+    provider, tracer = make_tracer(tmp_path / "t.jsonl")
+    client = ReplayClient(ROOT / "cassettes" / "v2.jsonl")
+    assert run_decision(client, s, load_prompt("v2"), tracer, Config(), "v2").final_tool == "set_price"
+    edited = {**load_prompt("v2"), "system": load_prompt("v2")["system"] + "\nBe bold."}
+    with pytest.raises(CassetteMiss):
+        run_decision(client, s, edited, tracer, Config(), "v2")
+    provider.shutdown()

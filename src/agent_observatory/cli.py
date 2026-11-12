@@ -78,6 +78,7 @@ def main(argv: list[str] | None = None) -> int:
     gt.add_argument("--baseline")
     sub.add_parser("ci")
     sub.add_parser("report")
+    sub.add_parser("demo")
     a = ap.parse_args(argv)
 
     if a.cmd == "scenarios":
@@ -102,6 +103,10 @@ def main(argv: list[str] | None = None) -> int:
         from .report import write_readme_tables
 
         write_readme_tables()
+    elif a.cmd == "demo":
+        from .demo import main as demo
+
+        return demo()
     return 0
 
 

@@ -2,8 +2,12 @@
 
 Tracing, scenario evals and a CI regression gate for an LLM agent that sets hotel room prices.
 
-> Status: work in progress (started 12 Nov 2026). Everything below was produced by the scripts in this repo;
-> the hotel is a **simulator**, not real hotel data.
+> Personal project (12 Nov 2026). Everything below was produced by the scripts in this repo; the hotel is a
+> **simulator**, not real hotel data.
+
+![Demo frames](docs/demo-preview.png)
+
+Demo video: [docs/demo.mp4](docs/demo.mp4) (32 s). Design notes, failure modes and Q&A: [STUDY.md](STUDY.md).
 
 ## Problem
 
@@ -115,6 +119,7 @@ uv run python -m agent_observatory ci       # what CI runs: replay the accepted 
 uv run python -m agent_observatory eval --prompt v2 --backend mlx   # live run, records the cassette
 uv run python -m agent_observatory gate --candidate results/eval-v3-regressed.json
 uv run python -m agent_observatory baselines && uv run python -m agent_observatory report
+uv run python -m agent_observatory demo     # the walk-through in the demo video
 uv run pytest && uv run ruff check .
 ```
 
