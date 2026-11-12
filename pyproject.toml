@@ -1,0 +1,40 @@
+[project]
+name = "agent-observatory"
+version = "0.1.0"
+description = "Tracing, evals and a CI regression gate for an LLM hotel-pricing agent on a demand simulator"
+readme = "README.md"
+authors = [
+    { name = "Shivam Tiwari" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.5.4",
+    "opentelemetry-api>=1.45.2",
+    "opentelemetry-sdk>=1.45.2",
+    "pyyaml>=6.0.3",
+]
+
+[project.optional-dependencies]
+local = [
+    "mlx-lm>=0.32.2 ; sys_platform == 'darwin'",
+]
+
+[build-system]
+requires = ["uv_build>=0.12.0,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "ruff>=0.17.5",
+]
+
+[tool.ruff]
+line-length = 130
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

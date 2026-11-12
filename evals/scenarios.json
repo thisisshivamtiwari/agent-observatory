@@ -1,0 +1,572 @@
+[
+ {
+  "id": "S01-quiet",
+  "days_to_arrival": 10,
+  "capacity": 180,
+  "rooms_left": 63,
+  "current_price": 130.0,
+  "reference_price": 130.0,
+  "base_demand": 26.1,
+  "sensitivity": 4.2,
+  "competitor_rates": [
+   139,
+   145,
+   136,
+   135
+  ],
+  "floor": 78,
+  "ceiling": 286,
+  "event": null
+ },
+ {
+  "id": "S02-event",
+  "days_to_arrival": 5,
+  "capacity": 180,
+  "rooms_left": 103,
+  "current_price": 160.0,
+  "reference_price": 160.0,
+  "base_demand": 135.9,
+  "sensitivity": 2.87,
+  "competitor_rates": [
+   194,
+   200,
+   190,
+   194
+  ],
+  "floor": 96,
+  "ceiling": 352,
+  "event": "concert"
+ },
+ {
+  "id": "S03-nearly_full",
+  "days_to_arrival": 4,
+  "capacity": 120,
+  "rooms_left": 10,
+  "current_price": 110.0,
+  "reference_price": 110.0,
+  "base_demand": 53.4,
+  "sensitivity": 3.18,
+  "competitor_rates": [
+   94,
+   103,
+   105,
+   106
+  ],
+  "floor": 66,
+  "ceiling": 242,
+  "event": null
+ },
+ {
+  "id": "S04-far_out",
+  "days_to_arrival": 63,
+  "capacity": 90,
+  "rooms_left": 63,
+  "current_price": 110.0,
+  "reference_price": 110.0,
+  "base_demand": 39.9,
+  "sensitivity": 5.77,
+  "competitor_rates": [
+   104,
+   107,
+   111,
+   105
+  ],
+  "floor": 66,
+  "ceiling": 242,
+  "event": null
+ },
+ {
+  "id": "S05-undercut",
+  "days_to_arrival": 14,
+  "capacity": 120,
+  "rooms_left": 56,
+  "current_price": 110.0,
+  "reference_price": 110.0,
+  "base_demand": 64.7,
+  "sensitivity": 7.78,
+  "competitor_rates": [
+   86,
+   97,
+   94,
+   90
+  ],
+  "floor": 66,
+  "ceiling": 242,
+  "event": null
+ },
+ {
+  "id": "S06-quiet",
+  "days_to_arrival": 6,
+  "capacity": 180,
+  "rooms_left": 78,
+  "current_price": 130.0,
+  "reference_price": 130.0,
+  "base_demand": 20.1,
+  "sensitivity": 4.55,
+  "competitor_rates": [
+   128,
+   133,
+   129,
+   132
+  ],
+  "floor": 78,
+  "ceiling": 286,
+  "event": null
+ },
+ {
+  "id": "S07-event",
+  "days_to_arrival": 7,
+  "capacity": 90,
+  "rooms_left": 37,
+  "current_price": 130.0,
+  "reference_price": 130.0,
+  "base_demand": 105.9,
+  "sensitivity": 2.16,
+  "competitor_rates": [
+   160,
+   162,
+   168,
+   169
+  ],
+  "floor": 78,
+  "ceiling": 286,
+  "event": "concert"
+ },
+ {
+  "id": "S08-nearly_full",
+  "days_to_arrival": 1,
+  "capacity": 180,
+  "rooms_left": 11,
+  "current_price": 90.0,
+  "reference_price": 90.0,
+  "base_demand": 98.9,
+  "sensitivity": 5.65,
+  "competitor_rates": [
+   90,
+   86,
+   86,
+   86
+  ],
+  "floor": 54,
+  "ceiling": 198,
+  "event": null
+ },
+ {
+  "id": "S09-far_out",
+  "days_to_arrival": 117,
+  "capacity": 120,
+  "rooms_left": 34,
+  "current_price": 130.0,
+  "reference_price": 130.0,
+  "base_demand": 80.8,
+  "sensitivity": 3.72,
+  "competitor_rates": [
+   133,
+   138,
+   136,
+   145
+  ],
+  "floor": 78,
+  "ceiling": 286,
+  "event": null
+ },
+ {
+  "id": "S10-undercut",
+  "days_to_arrival": 1,
+  "capacity": 120,
+  "rooms_left": 37,
+  "current_price": 130.0,
+  "reference_price": 130.0,
+  "base_demand": 46.5,
+  "sensitivity": 7.27,
+  "competitor_rates": [
+   103,
+   106,
+   96,
+   105
+  ],
+  "floor": 78,
+  "ceiling": 286,
+  "event": null
+ },
+ {
+  "id": "S11-quiet",
+  "days_to_arrival": 6,
+  "capacity": 180,
+  "rooms_left": 73,
+  "current_price": 90.0,
+  "reference_price": 90.0,
+  "base_demand": 33.4,
+  "sensitivity": 5.09,
+  "competitor_rates": [
+   93,
+   93,
+   96,
+   97
+  ],
+  "floor": 54,
+  "ceiling": 198,
+  "event": null
+ },
+ {
+  "id": "S12-event",
+  "days_to_arrival": 8,
+  "capacity": 180,
+  "rooms_left": 64,
+  "current_price": 160.0,
+  "reference_price": 160.0,
+  "base_demand": 253.7,
+  "sensitivity": 2.16,
+  "competitor_rates": [
+   212,
+   205,
+   213,
+   206
+  ],
+  "floor": 96,
+  "ceiling": 352,
+  "event": "trade fair"
+ },
+ {
+  "id": "S13-nearly_full",
+  "days_to_arrival": 12,
+  "capacity": 60,
+  "rooms_left": 4,
+  "current_price": 160.0,
+  "reference_price": 160.0,
+  "base_demand": 27.1,
+  "sensitivity": 6.17,
+  "competitor_rates": [
+   155,
+   165,
+   149,
+   168
+  ],
+  "floor": 96,
+  "ceiling": 352,
+  "event": null
+ },
+ {
+  "id": "S14-far_out",
+  "days_to_arrival": 116,
+  "capacity": 90,
+  "rooms_left": 40,
+  "current_price": 110.0,
+  "reference_price": 110.0,
+  "base_demand": 48.4,
+  "sensitivity": 4.09,
+  "competitor_rates": [
+   124,
+   124,
+   118,
+   117
+  ],
+  "floor": 66,
+  "ceiling": 242,
+  "event": null
+ },
+ {
+  "id": "S15-undercut",
+  "days_to_arrival": 11,
+  "capacity": 180,
+  "rooms_left": 79,
+  "current_price": 160.0,
+  "reference_price": 160.0,
+  "base_demand": 66.7,
+  "sensitivity": 9.12,
+  "competitor_rates": [
+   125,
+   120,
+   137,
+   128
+  ],
+  "floor": 96,
+  "ceiling": 352,
+  "event": null
+ },
+ {
+  "id": "S16-quiet",
+  "days_to_arrival": 14,
+  "capacity": 120,
+  "rooms_left": 70,
+  "current_price": 130.0,
+  "reference_price": 130.0,
+  "base_demand": 31.3,
+  "sensitivity": 5.71,
+  "competitor_rates": [
+   136,
+   134,
+   134,
+   128
+  ],
+  "floor": 78,
+  "ceiling": 286,
+  "event": null
+ },
+ {
+  "id": "S17-event",
+  "days_to_arrival": 7,
+  "capacity": 60,
+  "rooms_left": 17,
+  "current_price": 90.0,
+  "reference_price": 90.0,
+  "base_demand": 80.4,
+  "sensitivity": 2.07,
+  "competitor_rates": [
+   120,
+   110,
+   114,
+   113
+  ],
+  "floor": 54,
+  "ceiling": 198,
+  "event": "city marathon"
+ },
+ {
+  "id": "S18-nearly_full",
+  "days_to_arrival": 11,
+  "capacity": 60,
+  "rooms_left": 5,
+  "current_price": 160.0,
+  "reference_price": 160.0,
+  "base_demand": 27.2,
+  "sensitivity": 3.74,
+  "competitor_rates": [
+   152,
+   146,
+   146,
+   162
+  ],
+  "floor": 96,
+  "ceiling": 352,
+  "event": null
+ },
+ {
+  "id": "S19-far_out",
+  "days_to_arrival": 67,
+  "capacity": 90,
+  "rooms_left": 31,
+  "current_price": 160.0,
+  "reference_price": 160.0,
+  "base_demand": 79.4,
+  "sensitivity": 5.09,
+  "competitor_rates": [
+   169,
+   170,
+   171,
+   179
+  ],
+  "floor": 96,
+  "ceiling": 352,
+  "event": null
+ },
+ {
+  "id": "S20-undercut",
+  "days_to_arrival": 3,
+  "capacity": 60,
+  "rooms_left": 27,
+  "current_price": 160.0,
+  "reference_price": 160.0,
+  "base_demand": 12.9,
+  "sensitivity": 7.51,
+  "competitor_rates": [
+   130,
+   123,
+   127,
+   128
+  ],
+  "floor": 96,
+  "ceiling": 352,
+  "event": null
+ },
+ {
+  "id": "S21-quiet",
+  "days_to_arrival": 10,
+  "capacity": 180,
+  "rooms_left": 73,
+  "current_price": 130.0,
+  "reference_price": 130.0,
+  "base_demand": 40.0,
+  "sensitivity": 3.77,
+  "competitor_rates": [
+   136,
+   138,
+   143,
+   141
+  ],
+  "floor": 78,
+  "ceiling": 286,
+  "event": null
+ },
+ {
+  "id": "S22-event",
+  "days_to_arrival": 1,
+  "capacity": 180,
+  "rooms_left": 99,
+  "current_price": 90.0,
+  "reference_price": 90.0,
+  "base_demand": 147.2,
+  "sensitivity": 2.07,
+  "competitor_rates": [
+   109,
+   108,
+   116,
+   115
+  ],
+  "floor": 54,
+  "ceiling": 198,
+  "event": "city marathon"
+ },
+ {
+  "id": "S23-nearly_full",
+  "days_to_arrival": 11,
+  "capacity": 180,
+  "rooms_left": 14,
+  "current_price": 160.0,
+  "reference_price": 160.0,
+  "base_demand": 50.2,
+  "sensitivity": 5.29,
+  "competitor_rates": [
+   155,
+   169,
+   165,
+   168
+  ],
+  "floor": 96,
+  "ceiling": 352,
+  "event": null
+ },
+ {
+  "id": "S24-far_out",
+  "days_to_arrival": 69,
+  "capacity": 120,
+  "rooms_left": 45,
+  "current_price": 160.0,
+  "reference_price": 160.0,
+  "base_demand": 105.0,
+  "sensitivity": 6.57,
+  "competitor_rates": [
+   158,
+   158,
+   168,
+   146
+  ],
+  "floor": 96,
+  "ceiling": 352,
+  "event": null
+ },
+ {
+  "id": "S25-undercut",
+  "days_to_arrival": 13,
+  "capacity": 120,
+  "rooms_left": 70,
+  "current_price": 160.0,
+  "reference_price": 160.0,
+  "base_demand": 45.9,
+  "sensitivity": 7.88,
+  "competitor_rates": [
+   122,
+   123,
+   120,
+   129
+  ],
+  "floor": 96,
+  "ceiling": 352,
+  "event": null
+ },
+ {
+  "id": "S26-quiet",
+  "days_to_arrival": 6,
+  "capacity": 90,
+  "rooms_left": 48,
+  "current_price": 130.0,
+  "reference_price": 130.0,
+  "base_demand": 18.7,
+  "sensitivity": 3.86,
+  "competitor_rates": [
+   124,
+   125,
+   135,
+   128
+  ],
+  "floor": 78,
+  "ceiling": 286,
+  "event": null
+ },
+ {
+  "id": "S27-event",
+  "days_to_arrival": 13,
+  "capacity": 180,
+  "rooms_left": 120,
+  "current_price": 130.0,
+  "reference_price": 130.0,
+  "base_demand": 227.4,
+  "sensitivity": 2.11,
+  "competitor_rates": [
+   158,
+   162,
+   161,
+   159
+  ],
+  "floor": 78,
+  "ceiling": 286,
+  "event": "trade fair"
+ },
+ {
+  "id": "S28-nearly_full",
+  "days_to_arrival": 11,
+  "capacity": 180,
+  "rooms_left": 17,
+  "current_price": 110.0,
+  "reference_price": 110.0,
+  "base_demand": 49.5,
+  "sensitivity": 4.74,
+  "competitor_rates": [
+   111,
+   125,
+   124,
+   115
+  ],
+  "floor": 66,
+  "ceiling": 242,
+  "event": null
+ },
+ {
+  "id": "S29-far_out",
+  "days_to_arrival": 115,
+  "capacity": 180,
+  "rooms_left": 71,
+  "current_price": 130.0,
+  "reference_price": 130.0,
+  "base_demand": 100.3,
+  "sensitivity": 3.26,
+  "competitor_rates": [
+   127,
+   131,
+   131,
+   138
+  ],
+  "floor": 78,
+  "ceiling": 286,
+  "event": null
+ },
+ {
+  "id": "S30-undercut",
+  "days_to_arrival": 13,
+  "capacity": 180,
+  "rooms_left": 116,
+  "current_price": 130.0,
+  "reference_price": 130.0,
+  "base_demand": 49.3,
+  "sensitivity": 8.68,
+  "competitor_rates": [
+   99,
+   117,
+   113,
+   113
+  ],
+  "floor": 78,
+  "ceiling": 286,
+  "event": null
+ }
+]
