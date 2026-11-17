@@ -61,7 +61,7 @@ def main() -> int:
     print(f'\n{B}3. Someone edits the prompt: "undercut the lowest competitor by 5%"{END}')
     pause()
     bad = json.loads((ROOT / "results" / "eval-v3-regressed.json").read_text())
-    for f in gate(ROOT / "results" / "eval-v3-regressed.json"):
+    for f in gate(ROOT / "results" / "eval-v3-regressed.json")[0]:
         print(f"   {RED}GATE FAIL{END} {f}")
     print(f"   {RED}{B}gate: FAIL{END}, so CI goes red on the pull request")
     pause(0.8)

@@ -66,13 +66,13 @@ flowchart LR
 <!-- results:start -->
 Model: `mlx-community/Qwen2.5-1.5B-Instruct-4bit` (local, greedy decoding), 30 scenarios, accepted version: **v2**.
 
-| Version | Change | Pass rate | Revenue capture | p95 latency / decision | Tokens / decision | Est. cost / 1k decisions | Tool calls | Gate vs accepted |
+| Version | Change | Pass rate | Revenue capture | p95 latency / decision | Tokens / decision | Est. cost / 1k decisions | Tool calls | Gate vs accepted (ci mode) |
 |---|---|---|---|---|---|---|---|---|
-| v1 | minimal prompt | 0% | 67.0% | 0.7 s | 209 | $0.027 | 1.0 | FAIL (2 checks) |
+| v1 | minimal prompt | 0% | 67.0% | 0.7 s | 209 | $0.027 | 1.0 | FAIL (1 check) |
 | v2 | step-by-step procedure + price limits | 27% | 72.1% | 3.6 s | 1146 | $0.133 | 2.6 | accepted |
 | v3-regressed | deliberately broken edit of v2 (undercut rule) | 0% | 73.9% | 0.7 s | 243 | $0.031 | 1.0 | FAIL (1 check) |
-| v4 | v2 + worked example + runtime guardrails | 10% | 63.8% | 11.7 s | 2533 | $0.288 | 4.2 | FAIL (4 checks) |
-| v5 | v4 without the example, search spelled out | 13% | 69.8% | 9.4 s | 1895 | $0.222 | 3.9 | FAIL (4 checks) |
+| v4 | v2 + worked example + runtime guardrails | 10% | 63.8% | 11.7 s | 2533 | $0.288 | 4.2 | FAIL (2 checks) |
+| v5 | v4 without the example, search spelled out | 13% | 69.8% | 9.4 s | 1895 | $0.222 | 3.9 | FAIL (2 checks) |
 
 Share of decisions passing each check:
 
@@ -92,6 +92,16 @@ Non-LLM reference policies on the same scenarios:
 | match competitor median | 80.9% | 10% |
 | 5% under lowest competitor | 80.1% | 17% |
 | oracle (knows the demand curve) | 100.0% | 100% |
+
+Uncertainty: 95% bootstrap intervals over the 30 scenarios; differences are paired (same scenarios, candidate minus accepted). Cost per passed decision is total estimated cost over passed decisions.
+
+| Version | Pass rate | Revenue capture | Pass rate vs accepted | Capture vs accepted | Est. cost / 1k passed decisions | Fixed-tolerance gate | Interval gate |
+|---|---|---|---|---|---|---|---|
+| v1 | 0% [0%, 0%] | 67% [59%, 75%] | -27% [-43%, -10%] | -5.1% [-13.2%, +4.4%] | none passed | FAIL (2 checks) | FAIL: quality drop confirmed |
+| v2 | 27% [10%, 43%] | 72% [62%, 82%] | - | - | $0.50 [$0.32, $1.10] | accepted | accepted |
+| v3-regressed | 0% [0%, 0%] | 74% [67%, 81%] | -27% [-43%, -10%] | +1.8% [-8.5%, +13.2%] | none passed | FAIL (1 check) | FAIL: quality drop confirmed |
+| v4 | 10% [0%, 20%] | 64% [52%, 75%] | -17% [-33%, +0%] | -8.3% [-19.4%, +1.3%] | $2.88 [$1.22, $9.81] | FAIL (4 checks) | FAIL: latency/cost only |
+| v5 | 13% [3%, 27%] | 70% [60%, 79%] | -13% [-33%, +7%] | -2.4% [-12.2%, +7.8%] | $1.66 [$0.79, $6.91] | FAIL (4 checks) | FAIL: latency/cost only |
 <!-- results:end -->
 
 "Revenue capture" is the expected revenue of the published price divided by the oracle's, averaged over the

@@ -2,9 +2,10 @@ import json
 
 import pytest
 
+from agent_observatory import stats
 from agent_observatory.agent import ROOT, Config, load_prompt, parse_action, run_decision
 from agent_observatory.evals import load_scenarios, ops_from_traces, score
-from agent_observatory.gate import check
+from agent_observatory.gate import check, check_ci
 from agent_observatory.llm import CassetteMiss, Completion, RecordingClient, ReplayClient
 from agent_observatory.simulator import expected_revenue, expected_rooms_sold, generate_scenarios, oracle_price
 from agent_observatory.tracing import make_tracer, read_spans
@@ -132,3 +133,60 @@ def test_committed_cassette_replays_and_a_prompt_edit_misses(tmp_path):
     with pytest.raises(CassetteMiss):
         run_decision(client, s, edited, tracer, Config(), "v2")
     provider.shutdown()
+
+
+def rows_result(passed: list[bool], capture: list[float], cost: float = 0.001, p95=1000.0, cost_k=0.1):
+    rows = [
+        {"scenario": f"S{i:02d}", "passed": p, "capture": c, "decision": {"cost_usd": cost}}
+        for i, (p, c) in enumerate(zip(passed, capture, strict=True))
+    ]
+    return {
+        "scenarios": len(rows),
+        "pass_rate": sum(passed) / len(rows),
+        "revenue_capture_mean": sum(capture) / len(rows),
+        "ops": {"latency_ms_p95": p95, "cost_usd_per_1k_decisions_est": cost_k},
+        "rows": rows,
+    }
+
+
+def test_paired_interval_is_zero_for_identical_and_negative_for_a_clear_drop():
+    base = rows_result([True] * 20 + [False] * 10, [0.97] * 20 + [0.8] * 10)
+    same = stats.paired(base, base, "pass_rate")
+    assert same["diff"] == 0 and same["ci95"] == [0.0, 0.0]
+    worse = rows_result([False] * 30, [0.8] * 30)
+    p = stats.paired(worse, base, "pass_rate")
+    assert p["diff"] < 0 and p["ci95"][1] < 0 and p["p_worse"] > 0.99
+    lo, hi = stats.interval(base, "pass_rate")["ci95"]
+    assert lo < 2 / 3 < hi
+
+
+def test_paired_refuses_different_scenarios():
+    a = rows_result([True, False], [1.0, 0.5])
+    b = {**a, "rows": [{**r, "scenario": "X" + r["scenario"]} for r in a["rows"]]}
+    with pytest.raises(ValueError):
+        stats.paired(a, b, "pass_rate")
+
+
+def test_ci_gate_fails_only_confirmed_drops_and_warns_on_noise():
+    rules = {**RULES, "mode": "ci"}
+    base = rows_result([True] * 15 + [False] * 15, [0.97] * 15 + [0.8] * 15)
+    # two scenarios flip: a 6.7-point pass-rate drop, above the 5% tolerance but not confirmed by 30 scenarios
+    # (the capture drop, 1.1 points, is inside its 2% tolerance, so only one warning)
+    noisy = rows_result([False, False] + [True] * 13 + [False] * 15, [0.8, 0.8] + [0.97] * 13 + [0.8] * 15)
+    fails, warns = check_ci(noisy, base, rules)
+    assert fails == [] and len(warns) == 1 and "not confirmed" in warns[0]
+    collapsed = rows_result([False] * 30, [0.8] * 30)
+    fails, _ = check_ci(collapsed, base, rules)
+    assert any("confidently worse" in f for f in fails)
+    assert check(noisy, base, RULES) != []  # the fixed-tolerance gate rejects the noisy candidate
+
+
+def test_cost_per_pass_is_undefined_when_nothing_passes():
+    assert stats.cost_per_pass(rows_result([False] * 5, [0.5] * 5))["usd_per_1k_passed"] is None
+    c = stats.cost_per_pass(rows_result([True, False], [1.0, 0.5], cost=0.001))
+    assert c["usd_per_1k_passed"] == 2.0
+
+
+def test_detectable_drop_shrinks_with_more_scenarios():
+    assert stats.detectable_drop(0.5, 120) < stats.detectable_drop(0.5, 30)
+    assert stats.scenarios_needed(0.5, 0.05) > stats.scenarios_needed(0.5, 0.25)

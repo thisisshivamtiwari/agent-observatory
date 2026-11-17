@@ -1,8 +1,10 @@
 """Command line: python -m agent_observatory <command>.
 
 scenarios                        regenerate evals/scenarios.json (seeded)
+scenarios -n 150 --set n150      write the larger evals/scenarios-n150.json (its first 30 are the golden set)
 eval --prompt v2 --backend mlx   run the local model, record the cassette, write results/eval-v2.json
 eval --prompt v2 --backend replay
+eval --prompt v2 --set n150      the same on a named scenario set (results/eval-v2-n150.json)
 baselines                        score the non-LLM policies, write results/baselines.json
 gate --candidate results/eval-v3-regressed.json
 ci                               what GitHub Actions runs: replay the active prompt, check it reproduces the
@@ -21,7 +23,7 @@ from pathlib import Path
 import yaml
 
 from .agent import ROOT
-from .evals import SCENARIOS, baseline_policies, load_scenarios, run_eval
+from .evals import baseline_policies, load_scenarios, run_eval, scenario_file
 from .gate import GATE_FILE, gate
 from .llm import MlxClient, RecordingClient, ReplayClient
 from .simulator import generate_scenarios
@@ -29,8 +31,8 @@ from .simulator import generate_scenarios
 CASSETTES = ROOT / "cassettes"
 
 
-def client_for(backend: str, version: str):
-    cassette = CASSETTES / f"{version}.jsonl"
+def client_for(backend: str, version: str, scenario_set: str = ""):
+    cassette = CASSETTES / (f"{version}-{scenario_set}.jsonl" if scenario_set else f"{version}.jsonl")
     if backend == "mlx":
         return RecordingClient(MlxClient(), cassette)
     if backend == "replay":
@@ -53,15 +55,21 @@ def cmd_ci() -> int:
     committed = json.loads((ROOT / "results" / f"eval-{version}.json").read_text())
     with tempfile.TemporaryDirectory() as tmp:
         fresh = run_eval(version, client_for("replay", version), "replay", Path(tmp), Path(tmp))
-        fails = gate(Path(tmp) / f"eval-{version}.json")
+        fails, warns = gate(Path(tmp) / f"eval-{version}.json")
     print(summary_line(fresh))
     for key in ("pass_rate", "revenue_capture_mean", "check_pass_rates"):
         if fresh[key] != committed[key]:
             fails.append(f"replayed {key} {fresh[key]} differs from committed {committed[key]}")
+    report_gate(fails, warns)
+    return 1 if fails else 0
+
+
+def report_gate(fails: list[str], warns: list[str]) -> None:
+    for w in warns:
+        print("GATE WARN:", w)
     for f in fails:
         print("GATE FAIL:", f)
     print("gate:", "FAIL" if fails else "PASS")
-    return 1 if fails else 0
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -69,9 +77,11 @@ def main(argv: list[str] | None = None) -> int:
     sub = ap.add_subparsers(dest="cmd", required=True)
     sc = sub.add_parser("scenarios")
     sc.add_argument("-n", type=int, default=30)
+    sc.add_argument("--set", default="", dest="scenario_set")
     ev = sub.add_parser("eval")
     ev.add_argument("--prompt", required=True)
     ev.add_argument("--backend", choices=["mlx", "replay"], default="replay")
+    ev.add_argument("--set", default="", dest="scenario_set")
     sub.add_parser("baselines")
     gt = sub.add_parser("gate")
     gt.add_argument("--candidate", required=True)
@@ -82,20 +92,20 @@ def main(argv: list[str] | None = None) -> int:
     a = ap.parse_args(argv)
 
     if a.cmd == "scenarios":
-        SCENARIOS.write_text(json.dumps([s.to_dict() for s in generate_scenarios(a.n)], indent=1) + "\n")
-        print(f"wrote {a.n} scenarios to {SCENARIOS.relative_to(ROOT)}")
+        path = scenario_file(a.scenario_set)
+        path.write_text(json.dumps([s.to_dict() for s in generate_scenarios(a.n)], indent=1) + "\n")
+        print(f"wrote {a.n} scenarios to {path.relative_to(ROOT)}")
     elif a.cmd == "eval":
-        r = run_eval(a.prompt, client_for(a.backend, a.prompt), a.backend)
+        client = client_for(a.backend, a.prompt, a.scenario_set)
+        r = run_eval(a.prompt, client, a.backend, scenario_set=a.scenario_set)
         print(summary_line(r))
     elif a.cmd == "baselines":
         out = ROOT / "results" / "baselines.json"
         out.write_text(json.dumps(baseline_policies(load_scenarios()), indent=1) + "\n")
         print(out.read_text())
     elif a.cmd == "gate":
-        fails = gate(Path(a.candidate), Path(a.baseline) if a.baseline else None)
-        for f in fails:
-            print("GATE FAIL:", f)
-        print("gate:", "FAIL" if fails else "PASS")
+        fails, warns = gate(Path(a.candidate), Path(a.baseline) if a.baseline else None)
+        report_gate(fails, warns)
         return 1 if fails else 0
     elif a.cmd == "ci":
         return cmd_ci()

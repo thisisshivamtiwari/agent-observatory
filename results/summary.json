@@ -6,5 +6,8 @@
  "accepted_revenue_capture": 0.7211,
  "versions_rejected_by_gate": 4,
  "versions_compared": 4,
+ "gate_mode": "ci",
+ "versions_with_confirmed_quality_drop": 2,
+ "accepted_cost_per_1k_passed_est": 0.4991,
  "best_heuristic_capture": 0.8086
 }

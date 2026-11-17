@@ -1,7 +1,10 @@
-# CI eval gate. A candidate result fails if it is worse than the accepted result by more than these limits.
+# CI eval gate. A candidate result fails if it is worse than the accepted result (see src/agent_observatory/gate.py).
+# mode "ci": a quality drop fails only when its paired bootstrap 95% interval lies entirely below zero; a drop above
+# the tolerances below that the interval can't confirm is a warning. mode "fixed": the tolerances are hard limits.
+mode: ci
 active_prompt: v2
 accepted: results/eval-v2.json
-max_pass_rate_drop: 0.05     # absolute, e.g. 0.70 -> 0.64 fails
+max_pass_rate_drop: 0.05     # absolute, e.g. 0.70 -> 0.64
 max_capture_drop: 0.02       # absolute, mean revenue capture vs the oracle
-max_latency_growth: 0.50     # relative, p95 latency per decision
-max_cost_growth: 0.50        # relative, estimated cost per decision
+max_latency_growth: 0.50     # relative, p95 latency per decision (always a hard limit)
+max_cost_growth: 0.50        # relative, estimated cost per decision (always a hard limit)

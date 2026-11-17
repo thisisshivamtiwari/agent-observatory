@@ -80,9 +80,22 @@ def ops_from_traces(path: Path) -> dict:
     }
 
 
-def run_eval(version: str, client, backend: str, out_dir: Path = ROOT / "results", trace_dir: Path = ROOT / "traces") -> dict:
-    cfg, prompt, scenarios = Config.load(), load_prompt(version), load_scenarios()
-    trace_path = Path(trace_dir) / f"{version}-{backend}.jsonl"
+def scenario_file(scenario_set: str = "") -> Path:
+    """The default golden set is evals/scenarios.json (30); a named set such as "n150" is evals/scenarios-n150.json."""
+    return SCENARIOS if not scenario_set else ROOT / "evals" / f"scenarios-{scenario_set}.json"
+
+
+def run_eval(
+    version: str,
+    client,
+    backend: str,
+    out_dir: Path = ROOT / "results",
+    trace_dir: Path = ROOT / "traces",
+    scenario_set: str = "",
+) -> dict:
+    cfg, prompt, scenarios = Config.load(), load_prompt(version), load_scenarios(scenario_file(scenario_set))
+    name = f"{version}-{scenario_set}" if scenario_set else version
+    trace_path = Path(trace_dir) / f"{name}-{backend}.jsonl"
     provider, tracer = make_tracer(trace_path)
     rows = []
     for s in scenarios:
@@ -94,6 +107,7 @@ def run_eval(version: str, client, backend: str, out_dir: Path = ROOT / "results
         "prompt_version": version,
         "model": client.model_name,
         "backend": backend,
+        "scenario_set": scenario_set or "default",
         "scenarios": len(rows),
         "pass_rate": round(mean(r["passed"] for r in rows), 4),
         "check_pass_rates": {c: round(mean(r["checks"][c] for r in rows), 4) for c in check_names},
@@ -102,7 +116,7 @@ def run_eval(version: str, client, backend: str, out_dir: Path = ROOT / "results
         "ops": ops_from_traces(trace_path),
         "rows": rows,
     }
-    out = Path(out_dir) / f"eval-{version}.json"
+    out = Path(out_dir) / f"eval-{name}.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(result, indent=1) + "\n")
     return result
