@@ -237,5 +237,119 @@
    ]
   }
  },
- "n150": {}
+ "n150": {
+  "v2": {
+   "pass_rate": {
+    "mean": 0.2,
+    "ci95": [
+     0.14,
+     0.2667
+    ]
+   },
+   "revenue_capture": {
+    "mean": 0.7427,
+    "ci95": [
+     0.7004,
+     0.7832
+    ]
+   },
+   "cost_per_1k_passed": {
+    "usd_per_1k_passed": 0.6868,
+    "ci95": [
+     0.5223,
+     0.9849
+    ]
+   }
+  },
+  "v4": {
+   "pass_rate": {
+    "mean": 0.1867,
+    "ci95": [
+     0.1267,
+     0.2467
+    ]
+   },
+   "revenue_capture": {
+    "mean": 0.7016,
+    "ci95": [
+     0.6555,
+     0.7456
+    ]
+   },
+   "cost_per_1k_passed": {
+    "usd_per_1k_passed": 1.6424,
+    "ci95": [
+     1.1745,
+     2.5343
+    ]
+   },
+   "paired_pass_rate": {
+    "diff": -0.0133,
+    "ci95": [
+     -0.1,
+     0.0733
+    ],
+    "p_worse": 0.5906,
+    "sd": 0.5433,
+    "n": 150
+   },
+   "paired_revenue_capture": {
+    "diff": -0.0411,
+    "ci95": [
+     -0.091,
+     0.009
+    ],
+    "p_worse": 0.9455,
+    "sd": 0.3094,
+    "n": 150
+   },
+   "quality_fails": [],
+   "detectable_pass_rate_drop": 0.1243
+  },
+  "v5": {
+   "pass_rate": {
+    "mean": 0.16,
+    "ci95": [
+     0.1067,
+     0.22
+    ]
+   },
+   "revenue_capture": {
+    "mean": 0.7751,
+    "ci95": [
+     0.7369,
+     0.811
+    ]
+   },
+   "cost_per_1k_passed": {
+    "usd_per_1k_passed": 1.2671,
+    "ci95": [
+     0.901,
+     1.9687
+    ]
+   },
+   "paired_pass_rate": {
+    "diff": -0.04,
+    "ci95": [
+     -0.1267,
+     0.0467
+    ],
+    "p_worse": 0.8012,
+    "sd": 0.5294,
+    "n": 150
+   },
+   "paired_revenue_capture": {
+    "diff": 0.0324,
+    "ci95": [
+     -0.0122,
+     0.0785
+    ],
+    "p_worse": 0.0784,
+    "sd": 0.2866,
+    "n": 150
+   },
+   "quality_fails": [],
+   "detectable_pass_rate_drop": 0.1211
+  }
+ }
 }

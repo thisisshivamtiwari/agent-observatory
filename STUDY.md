@@ -104,3 +104,35 @@ forecasting), one small model, 30 scenarios (a few points' difference is noise),
 10. **What does "cost" mean here if the model is local?** The tokens are real. The dollar figure uses an assumed
     per-token rate in config.yaml, so versions can be compared on cost. It isn't a claim about any vendor's price.
     With a hosted model you'd log the provider's billed tokens on the span.
+
+## 6. v2 (17 Nov 2026): confidence intervals in the gate
+What changed: `stats.py` adds percentile bootstrap intervals (10,000 resamples of scenarios, seed 0) for pass rate,
+capture and cost per passed decision, and a **paired** bootstrap for candidate minus accepted on the same scenarios.
+`gate.yaml` now has `mode: ci`. A quality drop fails only if the whole paired 95% interval is below zero, and a
+drop above the old tolerance that the interval can't confirm is a warning with a scenario count. Latency and cost
+stay as fixed limits. A 150-scenario set (`--set n150`) was run locally for v2, v4 and v5. Numbers below are from
+`results/intervals.json`.
+
+- At 30 scenarios the smallest pass-rate drop detectable 80% of the time is about 23 to 29 points. The fixed
+  5-point tolerance was mostly measuring noise. Only v1 and v3-regressed have a confirmed quality drop (-27 points,
+  CI -43 to -10).
+- At 150: v2 20% [14%, 27%] (the 30-run said 27%). v4 -1 point vs v2 (it was -17 at n=30). v5 capture +3.2 points
+  [-1.2, +7.8] vs v2, where the fixed gate at n=30 had called it a capture regression. Detectable drop: ~12 points.
+- The shared first 30 scenarios gave identical decisions in both runs (greedy decoding), so the change between
+  n=30 and n=150 is purely the extra 120 scenarios, not model randomness.
+- Cost per 1k passed decisions at n=150: v2 $0.69, v5 $1.27, v4 $1.64 (assumed rate, see config.yaml).
+
+Questions this adds:
+11. **How do you set a pass-rate cutoff for an eval gate?** Start from what the eval set can detect, not from a
+    round number. With paired per-scenario results, the detectable drop is about (1.96 + 0.84) x sd / sqrt(n). Here
+    sd was about 0.45 to 0.57, so 30 scenarios only see drops of about 25 points. Either set the cutoff at what you
+    can detect, or grow the set until it detects the drop you care about (about 640 to 1,030 scenarios for 5
+    points here). The gate then fails on a confirmed drop and warns on an unconfirmed one.
+12. **Why paired rather than comparing two intervals?** Both versions see the same scenarios, and some scenarios
+    are hard for every version. Pairing cancels that shared difficulty. Two separate intervals overlapping doesn't
+    mean "no difference"; a paired interval answers the actual question: is the candidate worse on these
+    scenarios?
+13. **Doesn't "fail only on confirmed drops" let regressions through?** It trades false alarms for misses, so it
+    needs an eval set big enough to confirm the drops you care about. That's why the warnings print the scenario
+    count. For money-moving agents you could flip it to non-inferiority: fail unless the lower bound is above
+    -tolerance. At n=30 that would block every change, which says the same thing: the set is too small.

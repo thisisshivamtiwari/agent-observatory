@@ -93,12 +93,16 @@ def large_set(rules: dict) -> tuple[list[str], dict]:
         f"The same versions on {n} scenarios (`evals/scenarios-{LARGE_SET}.json`; its first 30 are the golden set):",
         "",
         "| Version | Pass rate | Revenue capture | Pass rate vs accepted | Capture vs accepted "
-        "| Smallest pass-rate drop detectable | Interval gate (quality) |",
-        "|---|---|---|---|---|---|---|",
+        "| Est. cost / 1k passed decisions | Smallest pass-rate drop detectable | Interval gate (quality) |",
+        "|---|---|---|---|---|---|---|---|",
     ]
     data = {}
     for v, r in runs.items():
-        row = {"pass_rate": stats.interval(r, "pass_rate"), "revenue_capture": stats.interval(r, "revenue_capture")}
+        row = {
+            "pass_rate": stats.interval(r, "pass_rate"),
+            "revenue_capture": stats.interval(r, "revenue_capture"),
+            "cost_per_1k_passed": stats.cost_per_pass(r),
+        }
         if v == acc:
             cells = ["-", "-", "-", "accepted"]
         else:
@@ -114,6 +118,7 @@ def large_set(rules: dict) -> tuple[list[str], dict]:
                 f"FAIL ({len(quality)} confirmed)" if quality else "no confirmed drop",
             ]
         data[v] = row
+        cells.insert(2, usd_ci(row["cost_per_1k_passed"]))
         out.append(f"| {v} | {pct_ci(row['pass_rate'])} | {pct_ci(row['revenue_capture'])} | " + " | ".join(cells) + " |")
     return out, data
 
